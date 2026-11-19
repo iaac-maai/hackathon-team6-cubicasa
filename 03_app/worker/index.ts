@@ -20,51 +20,61 @@ const TERMS_VERSION = "2026-11-19";
 
 export default {
   async fetch(request, env) {
-    const url = new URL(request.url);
-    const path = url.pathname;
-    const method = request.method;
-
-    if (path === "/api/login" && method === "POST") return login(request, env);
-    if (path === "/api/logout" && method === "POST") return logout();
-
-    // Lock 1, the team password: everything below needs its cookie
-    if (!(await loggedIn(request, env))) return Response.json({ error: "Not logged in", need: "password" }, { status: 401 });
-
-    if (path.startsWith("/data/")) return env.ASSETS.fetch(request); // the map data: no personal data in it
-
-    // Lock 2, the user account: sign up, sign in, Google and sign out are Better Auth's own routes
-    const auth = makeAuth(env, url.origin);
-    if (path.startsWith("/api/auth/")) return auth.handler(request);
-    const session = await auth.api.getSession({ headers: request.headers });
-    if (!session) {
-      return Response.json({ error: "Sign in to your account.", need: "account", google: Boolean(env.GOOGLE_CLIENT_ID && env.GOOGLE_CLIENT_SECRET) }, { status: 401 });
-    }
-    const user = session.user;
-    const termsAccepted = await accepted(env, user.id);
-
-    if (path === "/api/session") {
-      return Response.json({ user: { name: user.name, email: user.email, image: user.image ?? null }, termsAccepted, termsVersion: TERMS_VERSION });
-    }
-    if (path === "/api/terms/accept" && method === "POST") return accept(env, user.id);
-    if (path === "/api/account/delete" && method === "POST") return deleteAccount(env, user.id);
-    if (!termsAccepted) return Response.json({ error: "Accept the terms first.", need: "terms" }, { status: 403 });
-
-    if (path === "/api/wake") return wake(env);
-    if (path === "/api/search" && method === "POST") return search(request, env, user.id);
-    if (path === "/api/history") return history(env, user.id);
-
-    const image = path.match(/^\/api\/images\/([\w-]+)$/);
-    if (image) return uploadedImage(image[1], env, user.id);
-    const explained = path.match(/^\/api\/searches\/([\w-]+)\/explain$/);
-    if (explained) return explain(explained[1], env, user.id);
-    const earlierOnes = path.match(/^\/api\/searches\/([\w-]+)\/earlier$/);
-    if (earlierOnes) return earlier(earlierOnes[1], env, user.id);
-    const saved = path.match(/^\/api\/searches\/([\w-]+)$/);
-    if (saved) return savedSearch(saved[1], env, user.id);
-
-    return Response.json({ error: "No such endpoint." }, { status: 404 });
+    const response = await route(request, env);
+    // shortcut: team cookies set before 19 Nov are SameSite=Strict and don't come back from Google's sign-in page;
+    // /api/session, which the page asks first, renews them as Lax. Remove after 26 Nov, when they have all expired
+    if (new URL(request.url).pathname !== "/api/session" || !(await loggedIn(request, env))) return response;
+    const headers = new Headers(response.headers);
+    headers.append("Set-Cookie", await teamCookie(request, env));
+    return new Response(response.body, { status: response.status, headers });
   },
 } satisfies ExportedHandler<Env>;
+
+async function route(request: Request, env: Env): Promise<Response> {
+  const url = new URL(request.url);
+  const path = url.pathname;
+  const method = request.method;
+
+  if (path === "/api/login" && method === "POST") return login(request, env);
+  if (path === "/api/logout" && method === "POST") return logout();
+
+  // Lock 1, the team password: everything below needs its cookie
+  if (!(await loggedIn(request, env))) return Response.json({ error: "Not logged in", need: "password" }, { status: 401 });
+
+  if (path.startsWith("/data/")) return env.ASSETS.fetch(request); // the map data: no personal data in it
+
+  // Lock 2, the user account: sign up, sign in, Google and sign out are Better Auth's own routes
+  const auth = makeAuth(env, url.origin);
+  if (path.startsWith("/api/auth/")) return auth.handler(request);
+  const session = await auth.api.getSession({ headers: request.headers });
+  if (!session) {
+    return Response.json({ error: "Sign in to your account.", need: "account", google: Boolean(env.GOOGLE_CLIENT_ID && env.GOOGLE_CLIENT_SECRET) }, { status: 401 });
+  }
+  const user = session.user;
+  const termsAccepted = await accepted(env, user.id);
+
+  if (path === "/api/session") {
+    return Response.json({ user: { name: user.name, email: user.email, image: user.image ?? null }, termsAccepted, termsVersion: TERMS_VERSION });
+  }
+  if (path === "/api/terms/accept" && method === "POST") return accept(env, user.id);
+  if (path === "/api/account/delete" && method === "POST") return deleteAccount(env, user.id);
+  if (!termsAccepted) return Response.json({ error: "Accept the terms first.", need: "terms" }, { status: 403 });
+
+  if (path === "/api/wake") return wake(env);
+  if (path === "/api/search" && method === "POST") return search(request, env, user.id);
+  if (path === "/api/history") return history(env, user.id);
+
+  const image = path.match(/^\/api\/images\/([\w-]+)$/);
+  if (image) return uploadedImage(image[1], env, user.id);
+  const explained = path.match(/^\/api\/searches\/([\w-]+)\/explain$/);
+  if (explained) return explain(explained[1], env, user.id);
+  const earlierOnes = path.match(/^\/api\/searches\/([\w-]+)\/earlier$/);
+  if (earlierOnes) return earlier(earlierOnes[1], env, user.id);
+  const saved = path.match(/^\/api\/searches\/([\w-]+)$/);
+  if (saved) return savedSearch(saved[1], env, user.id);
+
+  return Response.json({ error: "No such endpoint." }, { status: 404 });
+}
 
 // ---- Log in and out ----------------------------------------------------------
 
@@ -88,15 +98,15 @@ async function login(request: Request, env: Env) {
   if (!env.APP_PASSWORD || password !== env.APP_PASSWORD) {
     return Response.json({ error: "Wrong password. Try again." }, { status: 401 });
   }
+  return Response.json({ ok: true }, { headers: { "Set-Cookie": await teamCookie(request, env) } });
+}
+
+async function teamCookie(request: Request, env: Env) {
   // Secure: only sent over https (always online; locally the app runs on http://localhost)
   const secure = new URL(request.url).protocol === "https:" ? "; Secure" : "";
-  return Response.json({ ok: true }, {
-    headers: {
-      // HttpOnly: page scripts can't read it; SameSite=Lax: other sites can't use it, but it comes back
-      // with the redirect from Google's sign-in page (Strict would lock that redirect out); 7 days
-      "Set-Cookie": `auth=${await authToken(env.APP_PASSWORD)}; Path=/; HttpOnly; SameSite=Lax; Max-Age=604800${secure}`,
-    },
-  });
+  // HttpOnly: page scripts can't read it; SameSite=Lax: other sites can't use it, but it comes back
+  // with the redirect from Google's sign-in page (Strict would lock that redirect out); 7 days
+  return `auth=${await authToken(env.APP_PASSWORD)}; Path=/; HttpOnly; SameSite=Lax; Max-Age=604800${secure}`;
 }
 
 function logout() {
