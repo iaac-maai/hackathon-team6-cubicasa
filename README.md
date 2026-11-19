@@ -54,8 +54,8 @@ flowchart LR
     U["Architect<br/>uploads a plan"] --> W["Worker on Cloudflare<br/>team password, accounts,<br/>search, history"]
     W -->|"predict_model<br/>explain_model"| S["Model server on Render<br/>ONNX Runtime: v1, v2, v3"]
     S --> W
-    W -.->|"sign in with Google,<br/>optional"| G["Google"]
-    W --> D[("D1<br/>one row per search, with its<br/>128 numbers, and the accounts")]
+    G["Google<br/>sign-in, optional"] -.-> W
+    W --> D[("D1<br/>the searches with their<br/>128 numbers, the accounts")]
     W --> R[("R2<br/>the uploaded plans,<br/>the full answers")]
     H["Hugging Face<br/>models and the 5,000 plans"] -.-> S
     classDef you fill:#fbe9e4,stroke:#c93b1b,color:#3d120a
