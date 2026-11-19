@@ -2,3 +2,9 @@ APP_PASSWORD=change-me
 
 # Optional: use the model server running on your computer (02_model_server, python app.py)
 # MODEL_URL=http://localhost:7860
+
+# Needed for user accounts: any long random value, e.g. from: openssl rand -base64 32
+BETTER_AUTH_SECRET=change-me
+# Optional, for "Continue with Google" (Google Cloud Console, OAuth client)
+# GOOGLE_CLIENT_ID=...
+# GOOGLE_CLIENT_SECRET=...

@@ -89,7 +89,7 @@ export const planNumber = (id: string) => id.split("/").pop() ?? id;
 export const planSource = (id: string) => id.split("/")[0].replaceAll("_", " ");
 
 export class ApiError extends Error {
-  constructor(message: string, readonly status: number, readonly waking = false) {
+  constructor(message: string, readonly status: number, readonly waking = false, readonly body: Record<string, unknown> = {}) {
     super(message);
   }
 }
@@ -97,8 +97,19 @@ export class ApiError extends Error {
 export async function api<T>(path: string, init?: RequestInit): Promise<T> {
   const response = await fetch(path, init);
   const body = await response.json().catch(() => ({}));
-  if (!response.ok) throw new ApiError(body.error || response.statusText, response.status, Boolean(body.waking));
+  // our worker says "error"; Better Auth (/api/auth/...) says "message"
+  if (!response.ok) throw new ApiError(body.error || body.message || response.statusText, response.status, Boolean(body.waking), body);
   return body as T;
+}
+
+export const postJson = <T,>(path: string, data: unknown) =>
+  api<T>(path, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(data) });
+
+// Who is signed in, from GET /api/session
+export interface Me {
+  user: { name: string; email: string; image: string | null };
+  termsAccepted: boolean;
+  termsVersion: string;
 }
 
 // A free Render server sleeps after 15 minutes: when the API says it is waking, wait and ask again

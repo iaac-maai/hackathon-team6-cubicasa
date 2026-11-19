@@ -1,6 +1,7 @@
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import { App } from "./App";
+import "@fontsource-variable/archivo/wdth.css"; // served by the app itself: no request to Google Fonts
 import "./styles.css";
 
 // For whoever opens the console

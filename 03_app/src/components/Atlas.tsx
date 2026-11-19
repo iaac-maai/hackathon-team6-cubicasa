@@ -322,7 +322,7 @@ export function Atlas({ atlas, model, distances, matches, uploadedUrl, hoverRank
         context.moveTo(yx, yy - 6);
         context.lineTo(yx, yy + 6);
         context.stroke();
-        context.font = "650 12px Archivo, system-ui, sans-serif";
+        context.font = "650 12px \"Archivo Variable\", system-ui, sans-serif";
         context.lineWidth = 3;
         context.strokeStyle = "#fff";
         context.strokeText("Your plan", yx + 10, yy - 8);
@@ -356,7 +356,7 @@ export function Atlas({ atlas, model, distances, matches, uploadedUrl, hoverRank
     context.strokeStyle = "#c93b1b";
     context.lineWidth = strong ? 2.5 : 1.8;
     context.strokeRect(x, y, size, size);
-    context.font = "650 11px Archivo, system-ui, sans-serif";
+    context.font = "650 11px \"Archivo Variable\", system-ui, sans-serif";
     const width = context.measureText(text).width + 8;
     context.fillStyle = "#c93b1b";
     context.fillRect(x - 1, y - 15, width, 15);

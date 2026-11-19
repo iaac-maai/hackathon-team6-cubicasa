@@ -27,7 +27,7 @@ You choose one of the three networks and upload a plan. Your plan and the five c
 
 ```mermaid
 flowchart LR
-    U["Architect<br/>uploads a plan"] --> W["Worker on Cloudflare<br/>password, search, history"]
+    U["Architect<br/>uploads a plan"] --> W["Worker on Cloudflare<br/>password, accounts, search, history"]
     W -->|"predict_model<br/>explain_model"| S["Model server on Render<br/>ONNX Runtime: v1, v2, v3"]
     S --> W
     W --> D[("D1<br/>one row per search,<br/>with its 128 numbers")]
@@ -41,7 +41,7 @@ flowchart LR
     class D,R,H store
 ```
 
-The page never talks to the model: the Worker checks the password, asks the server on Render, and keeps every search in D1 and R2, so a past search opens again while the free server sleeps. The 128 numbers of each upload stay in D1 and the Worker compares them itself, to find earlier uploads like this one. The details are in [`03_app/`](03_app/) and [`02_model_server/`](02_model_server/).
+The page never talks to the model: the Worker checks the team password and the user's account, asks the server on Render, and keeps every search in D1 and R2, so a past search opens again while the free server sleeps. The 128 numbers of each upload stay in D1 and the Worker compares them itself, to find earlier uploads like this one. The details are in [`03_app/`](03_app/) and [`02_model_server/`](02_model_server/).
 
 ## Live parts
 
@@ -58,7 +58,7 @@ The page never talks to the model: the Worker checks the password, asks the serv
 |---|---|
 | [`01_autoencoder/`](01_autoencoder/) | Monday: the data preparation, the notebook with three setups, the ONNX model, the model card and the slides. Tuesday: version 2 of the model, trained on cleaned plans (section 6 of the notebook), and version 3, which reads the rooms (`notebook/internal_layout_v3.ipynb`, by Chloe) |
 | [`02_model_server/`](02_model_server/) | Tuesday: the model server (Gradio and ONNX Runtime on Render), its API and a notebook that calls it. Wednesday: `/predict_model`, to choose the network, and `/explain_model`, what every layer computes for one plan |
-| [`03_app/`](03_app/) | Wednesday: the app on Cloudflare, behind a password. A React page and a Worker that calls the model server, D1 for the searches and R2 for the plans. Look inside shows what the network computed: where the plan lands among the 5,000, how close the five matches are, what each layer sees. Our user stories and diagrams are in `03_app/diagrams/` |
+| [`03_app/`](03_app/) | Wednesday: the app on Cloudflare, behind a team password and user accounts, with Google sign-in, terms, a privacy policy, a guide and a FAQ. A React page and a Worker that calls the model server, D1 for the searches and R2 for the plans. Look inside shows what the network computed: where the plan lands among the 5,000, how close the five matches are, what each layer sees. Our user stories and diagrams are in `03_app/diagrams/` |
 | [`docs/images/`](docs/images/) | The images of this README: the animation at the top, drawn by `make_hero.py` from the v3 model and the 5,000 plans, and the app in six screens |
 
 ## Dataset

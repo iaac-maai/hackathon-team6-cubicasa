@@ -1,8 +1,10 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
-  <!-- a very small flat: bedroom, kitchen, living room, two doors -->
-  <rect width="32" height="32" rx="5" fill="#fff"/>
-  <rect x="5" y="5" width="12" height="10" fill="#4477aa"/>
-  <rect x="5" y="15" width="12" height="12" fill="#ccbb44"/>
-  <rect x="17" y="5" width="10" height="22" fill="#ee6677"/>
-  <path d="M5 5h22v22H5z M17 5v7 M17 17v10 M5 15h7" fill="none" stroke="#1b2129" stroke-width="2"/>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="16 16 88 88">
+  <!-- a very small flat: bedroom, kitchen, living room, two doors. The same drawing as logo.svg,
+       cropped close to the walls for the tab and the top bar; logo.png keeps a margin for Google -->
+  <rect x="16" y="16" width="88" height="88" rx="10" fill="#fff"/>
+  <rect x="24" y="24" width="39.5" height="32.5" fill="#4477aa"/>
+  <rect x="24" y="56.5" width="39.5" height="39.5" fill="#ccbb44"/>
+  <rect x="63.5" y="24" width="32.5" height="72" fill="#ee6677"/>
+  <path d="M63.5 24v23.5 M63.5 63.5v32.5 M24 56.5h23.5" fill="none" stroke="#1b2129" stroke-width="3.5"/>
+  <rect x="24" y="24" width="72" height="72" fill="none" stroke="#1b2129" stroke-width="7"/>
 </svg>

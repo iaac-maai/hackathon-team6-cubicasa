@@ -1,5 +1,8 @@
 import { useEffect, useLayoutEffect, useRef, useState } from "react";
-import { api, ApiError, MODELS, ROOM_COLOURS, untilAwake, type Atlas as AtlasData, type Earlier, type Explain, type Model, type SavedSearch, type SearchResult } from "./api";
+import { api, ApiError, MODELS, postJson, ROOM_COLOURS, untilAwake, type Atlas as AtlasData, type Earlier, type Explain, type Me, type Model, type SavedSearch, type SearchResult } from "./api";
+import { AccountScreen, DeleteAccount, PENDING_TERMS, TermsDialog } from "./components/Account";
+import { TERMS_VERSION } from "./legal";
+import { InfoPage, PAGES, type PagePath } from "./pages";
 import { Atlas } from "./components/Atlas";
 import { History } from "./components/History";
 import { Login } from "./components/Login";
@@ -10,8 +13,13 @@ import { Upload } from "./components/Upload";
 type Status = { text: string; tone: "info" | "waking" | "error" } | null;
 const WAKING = "The model is waking up, about one minute.";
 
+// The three locks, in order: the team password, your account, the terms you accepted
+type Gate = "checking" | "password" | "account" | "terms" | "in";
+
 export function App() {
-  const [session, setSession] = useState<"checking" | "in" | "out">("checking");
+  const [session, setSession] = useState<Gate>("checking");
+  const [me, setMe] = useState<Me | null>(null);
+  const [google, setGoogle] = useState(false);
   const [view, setView] = useState<"search" | "history">("search");
   const [model, setModel] = useState<Model>("v3");
   const [file, setFile] = useState<File | null>(null);
@@ -54,8 +62,34 @@ export function App() {
     });
   }, [shown?.result.id]);
 
+  async function checkSession() {
+    try {
+      const answer = await api<Me>("/api/session");
+      setMe(answer);
+      let pending: string | null = null;
+      try {
+        pending = sessionStorage.getItem(PENDING_TERMS);
+        sessionStorage.removeItem(PENDING_TERMS);
+      } catch { /* private window */ }
+      if (!answer.termsAccepted && pending === TERMS_VERSION) {
+        await api("/api/terms/accept", { method: "POST" }); // accepted in the window, just before going to Google
+        answer.termsAccepted = true;
+      }
+      setSession(answer.termsAccepted ? "in" : "terms");
+    } catch (err) {
+      if (err instanceof ApiError && err.body.need === "account") {
+        setGoogle(Boolean(err.body.google));
+        setSession("account");
+      } else {
+        setSession("password");
+      }
+    }
+  }
+
+  const signOut = () => postJson("/api/auth/sign-out", {}).finally(() => window.location.assign("/"));
+
   useEffect(() => {
-    api("/api/session").then(() => setSession("in"), () => setSession("out"));
+    checkSession();
   }, []);
 
   useEffect(() => {
@@ -72,7 +106,7 @@ export function App() {
   }, [session, view]);
 
   function failed(err: unknown, show: (text: string) => void) {
-    if (err instanceof ApiError && err.status === 401) return setSession("out");
+    if (err instanceof ApiError && (err.status === 401 || err.status === 403)) return void checkSession();
     show(err instanceof ApiError ? (err.waking ? `${WAKING} Please try again in a minute.` : err.message) : "Could not reach the app. Check your connection.");
   }
 
@@ -136,21 +170,32 @@ export function App() {
     }
   }
 
+  const route = window.location.pathname;
+  if (route in PAGES) return <><InfoPage path={route as PagePath} /><Colophon me={me} /></>;
   if (session === "checking") return null;
-  if (session === "out") return <Login onLoggedIn={() => setSession("in")} />;
+  if (session === "password") return <><Login onLoggedIn={checkSession} /><Colophon me={null} /></>;
+  if (session === "account") return <><AccountScreen google={google} onSignedIn={checkSession} /><Colophon me={null} /></>;
+  if (session === "terms") {
+    return (
+      <>
+        <main className="login" />
+        <TermsDialog intro="The terms have to be accepted before you use the app." acceptLabel="Accept" cancelLabel="Decline and sign out"
+          onAccept={() => api("/api/terms/accept", { method: "POST" }).then(checkSession, checkSession)} onCancel={signOut} />
+      </>
+    );
+  }
 
   return (
     <>
       <header className="bar">
         <div className="bar-inner">
-          <p className="product">Plan precedents <span>Team 6 · CubiCasa5K</span></p>
+          <p className="product"><img src="/favicon.svg" alt="" width="22" height="22" />Plan precedents <span>Team 6 · CubiCasa5K</span></p>
           <nav aria-label="Views">
             <button type="button" aria-current={view === "search" ? "page" : undefined} onClick={() => setView("search")}>Search</button>
             <button type="button" aria-current={view === "history" ? "page" : undefined} onClick={() => setView("history")}>Saved searches</button>
           </nav>
-          <button type="button" className="logout" onClick={() => api("/api/logout", { method: "POST" }).finally(() => setSession("out"))}>
-            Log out
-          </button>
+          <p className="who" title={me?.user.email}>{me?.user.name}</p>
+          <button type="button" className="logout" onClick={signOut}>Log out</button>
         </div>
       </header>
 
@@ -199,14 +244,29 @@ export function App() {
         )}
       </main>
 
-      <footer className="colophon">
-        <div>
-          <p><b>Plan precedents</b> · Team 6, AI Methods I, IAAC 2026</p>
-          <p>Plans and rooms from CubiCasa5K, Kalervo et al., 2019</p>
-          <p>The model runs on Render, the page and the data on Cloudflare</p>
-          <p><a href="/humans.txt">humans.txt</a></p>
-        </div>
-      </footer>
+      <Colophon me={me} />
     </>
+  );
+}
+
+// The close of every page: who made it, where it runs, and the terms, the privacy policy and your account
+function Colophon({ me }: { me: Me | null }) {
+  return (
+    <footer className="colophon">
+      <div>
+        <p><b>Plan precedents</b> · Team 6, AI Methods I, IAAC 2026</p>
+        <p>Plans and rooms from CubiCasa5K, Kalervo et al., 2019</p>
+        <p>The model runs on Render, the page and the data on Cloudflare</p>
+        <p className="legal-links">
+          <a href="/guide">Guide</a>
+          <a href="/features">Features</a>
+          <a href="/faq">FAQ</a>
+          <a href="/terms">Terms and conditions</a>
+          <a href="/privacy">Privacy policy</a>
+          {me && <DeleteAccount onDeleted={() => window.location.assign("/")} />}
+          <a href="/humans.txt">humans.txt</a>
+        </p>
+      </div>
+    </footer>
   );
 }
