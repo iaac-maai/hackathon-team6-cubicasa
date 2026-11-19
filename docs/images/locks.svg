@@ -1,0 +1,43 @@
+<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 250' width='1200' height='250' role='img' aria-labelledby='t d' font-family='Helvetica Neue, Helvetica, Arial, sans-serif'>
+<title id='t'>How you get in: three locks, then your own searches</title><desc id='d'>Four steps along a line. 01 Team password, from the course hand-in: a field fills with dots. 02 Your account, email and password, or Google. 03 The terms, which open when you sign up: a box gets ticked, I agree. 04 Your searches: only you see them.</desc>
+<style>.ink0{animation:ink0 11s cubic-bezier(.65,0,.35,1) infinite}@keyframes ink0{0%,4%{stroke-dashoffset:1;opacity:1}13%,93%{stroke-dashoffset:0;opacity:1}98%,100%{stroke-dashoffset:0;opacity:0}}.t0{animation:t0 11s cubic-bezier(.65,0,.35,1) infinite}@keyframes t0{0%,4%{fill:#b9c0c7}7%,93%{fill:#1b2129}99%,100%{fill:#b9c0c7}}.ink1{animation:ink1 11s cubic-bezier(.65,0,.35,1) infinite}@keyframes ink1{0%,17%{stroke-dashoffset:1;opacity:1}26%,93%{stroke-dashoffset:0;opacity:1}98%,100%{stroke-dashoffset:0;opacity:0}}.t1{animation:t1 11s cubic-bezier(.65,0,.35,1) infinite}@keyframes t1{0%,17%{fill:#b9c0c7}20%,93%{fill:#1b2129}99%,100%{fill:#b9c0c7}}.ink2{animation:ink2 11s cubic-bezier(.65,0,.35,1) infinite}@keyframes ink2{0%,30%{stroke-dashoffset:1;opacity:1}39%,93%{stroke-dashoffset:0;opacity:1}98%,100%{stroke-dashoffset:0;opacity:0}}.t2{animation:t2 11s cubic-bezier(.65,0,.35,1) infinite}@keyframes t2{0%,30%{fill:#b9c0c7}33%,93%{fill:#1b2129}99%,100%{fill:#b9c0c7}}.ink3{animation:ink3 11s cubic-bezier(.65,0,.35,1) infinite}@keyframes ink3{0%,43%{stroke-dashoffset:1;opacity:1}52%,93%{stroke-dashoffset:0;opacity:1}98%,100%{stroke-dashoffset:0;opacity:0}}.t3{animation:t3 11s cubic-bezier(.65,0,.35,1) infinite}@keyframes t3{0%,43%{fill:#b9c0c7}46%,93%{fill:#1b2129}99%,100%{fill:#b9c0c7}}.p0{animation:p0 11s cubic-bezier(.65,0,.35,1) infinite}@keyframes p0{0%,5.0%{opacity:0}5.4%,93%{opacity:1}98%,100%{opacity:0}}.p1{animation:p1 11s cubic-bezier(.65,0,.35,1) infinite}@keyframes p1{0%,5.9%{opacity:0}6.3%,93%{opacity:1}98%,100%{opacity:0}}.p2{animation:p2 11s cubic-bezier(.65,0,.35,1) infinite}@keyframes p2{0%,6.8%{opacity:0}7.2%,93%{opacity:1}98%,100%{opacity:0}}.p3{animation:p3 11s cubic-bezier(.65,0,.35,1) infinite}@keyframes p3{0%,7.7%{opacity:0}8.1%,93%{opacity:1}98%,100%{opacity:0}}.p4{animation:p4 11s cubic-bezier(.65,0,.35,1) infinite}@keyframes p4{0%,8.6%{opacity:0}9.0%,93%{opacity:1}98%,100%{opacity:0}}.p5{animation:p5 11s cubic-bezier(.65,0,.35,1) infinite}@keyframes p5{0%,9.5%{opacity:0}9.9%,93%{opacity:1}98%,100%{opacity:0}}.p6{animation:p6 11s cubic-bezier(.65,0,.35,1) infinite}@keyframes p6{0%,10.4%{opacity:0}10.8%,93%{opacity:1}98%,100%{opacity:0}}.p7{animation:p7 11s cubic-bezier(.65,0,.35,1) infinite}@keyframes p7{0%,11.3%{opacity:0}11.7%,93%{opacity:1}98%,100%{opacity:0}}.a0{animation:a0 11s cubic-bezier(.65,0,.35,1) infinite}@keyframes a0{0%,19%{opacity:0;transform:translateY(6px)}22%,93%{opacity:1;transform:none}98%,100%{opacity:0;transform:none}}.a1{animation:a1 11s cubic-bezier(.65,0,.35,1) infinite}@keyframes a1{0%,22%{opacity:0;transform:translateY(6px)}25%,93%{opacity:1;transform:none}98%,100%{opacity:0;transform:none}}.tick{animation:tick 11s cubic-bezier(.65,0,.35,1) infinite}@keyframes tick{0%,34%{stroke-dashoffset:1}38%,93%{stroke-dashoffset:0}98%,100%{stroke-dashoffset:1}}.s0{animation:s0 11s cubic-bezier(.65,0,.35,1) infinite}@keyframes s0{0%,53%{opacity:0;transform:translateY(6px)}56%,93%{opacity:1;transform:none}98%,100%{opacity:0;transform:none}}.s1{animation:s1 11s cubic-bezier(.65,0,.35,1) infinite}@keyframes s1{0%,56%{opacity:0;transform:translateY(6px)}59%,93%{opacity:1;transform:none}98%,100%{opacity:0;transform:none}}.s2{animation:s2 11s cubic-bezier(.65,0,.35,1) infinite}@keyframes s2{0%,59%{opacity:0;transform:translateY(6px)}62%,93%{opacity:1;transform:none}98%,100%{opacity:0;transform:none}}.dot{animation:dot 11s cubic-bezier(.65,0,.35,1) infinite}@keyframes dot{0%{transform:translateX(-1120px);opacity:0}3%{opacity:1}4%{transform:translateX(-1120px)}13%{transform:translateX(-870px)}17%{transform:translateX(-830px)}26%{transform:translateX(-580px)}30%{transform:translateX(-540px)}39%{transform:translateX(-290px)}43%{transform:translateX(-250px)}52%{transform:translateX(0px)}93%{transform:none;opacity:1}98%,100%{transform:none;opacity:0}}@media (prefers-reduced-motion:reduce){*{animation:none!important}}</style>
+<rect width='1200' height='250' fill='#fff'/>
+<line x1='40' y1='36' x2='290' y2='36' stroke='#dde1e5' stroke-width='2'/>
+<line class='ink0' pathLength='1' stroke-dasharray='1' x1='40' y1='36' x2='290' y2='36' stroke='#1b2129' stroke-width='3'/>
+<text x='40' y='70' font-size='15' fill='#636c77' letter-spacing='1'>01</text>
+<text class='t0' x='40' y='108' font-size='31' font-weight='700' fill='#1b2129' letter-spacing='-0.5'>Team password</text>
+<text x='40' y='138' font-size='19' fill='#46505c'>from the course hand-in</text>
+<line x1='330' y1='36' x2='580' y2='36' stroke='#dde1e5' stroke-width='2'/>
+<line class='ink1' pathLength='1' stroke-dasharray='1' x1='330' y1='36' x2='580' y2='36' stroke='#1b2129' stroke-width='3'/>
+<text x='330' y='70' font-size='15' fill='#636c77' letter-spacing='1'>02</text>
+<text class='t1' x='330' y='108' font-size='31' font-weight='700' fill='#1b2129' letter-spacing='-0.5'>Your account</text>
+<text x='330' y='138' font-size='19' fill='#46505c'>email and password, or Google</text>
+<line x1='620' y1='36' x2='870' y2='36' stroke='#dde1e5' stroke-width='2'/>
+<line class='ink2' pathLength='1' stroke-dasharray='1' x1='620' y1='36' x2='870' y2='36' stroke='#1b2129' stroke-width='3'/>
+<text x='620' y='70' font-size='15' fill='#636c77' letter-spacing='1'>03</text>
+<text class='t2' x='620' y='108' font-size='31' font-weight='700' fill='#1b2129' letter-spacing='-0.5'>The terms</text>
+<text x='620' y='138' font-size='19' fill='#46505c'>they open when you sign up</text>
+<line x1='910' y1='36' x2='1160' y2='36' stroke='#dde1e5' stroke-width='2'/>
+<line class='ink3' pathLength='1' stroke-dasharray='1' x1='910' y1='36' x2='1160' y2='36' stroke='#1b2129' stroke-width='3'/>
+<text x='910' y='70' font-size='15' fill='#636c77' letter-spacing='1'>04</text>
+<text class='t3' x='910' y='108' font-size='31' font-weight='700' fill='#1b2129' letter-spacing='-0.5'>Your searches</text>
+<text x='910' y='138' font-size='19' fill='#46505c'>only you see them</text>
+<rect x='40' y='166' width='250' height='46' fill='none' stroke='#636c77' stroke-width='1.5'/>
+<circle class='p0' cx='62' cy='189' r='5' fill='#1b2129'/>
+<circle class='p1' cx='82' cy='189' r='5' fill='#1b2129'/>
+<circle class='p2' cx='102' cy='189' r='5' fill='#1b2129'/>
+<circle class='p3' cx='122' cy='189' r='5' fill='#1b2129'/>
+<circle class='p4' cx='142' cy='189' r='5' fill='#1b2129'/>
+<circle class='p5' cx='162' cy='189' r='5' fill='#1b2129'/>
+<circle class='p6' cx='182' cy='189' r='5' fill='#1b2129'/>
+<circle class='p7' cx='202' cy='189' r='5' fill='#1b2129'/>
+<g class='a0'><rect x='330' y='166' width='104' height='46' fill='#fff' stroke='#1b2129' stroke-width='1.5'/><text x='382.0' y='195' font-size='18' font-weight='600' fill='#1b2129' text-anchor='middle'>Email</text></g>
+<g class='a1'><rect x='448' y='166' width='132' height='46' fill='#f4f5f6' stroke='#1b2129' stroke-width='1.5'/><text x='514.0' y='195' font-size='18' font-weight='600' fill='#1b2129' text-anchor='middle'>Google</text></g>
+<rect x='620' y='172' width='32' height='32' fill='#fff' stroke='#1b2129' stroke-width='2'/>
+<path class='tick' pathLength='1' stroke-dasharray='1' d='M627 189 l7 7 l12 -14' fill='none' stroke='#c93b1b' stroke-width='3.5' stroke-linecap='round' stroke-linejoin='round'/>
+<text x='666' y='195' font-size='18' fill='#1b2129'>I agree</text>
+<g class='s0'><rect x='910' y='160' width='22' height='22' fill='#fff' stroke='#1b2129' stroke-width='2'/><rect x='911' y='161' width='11' height='9' fill='#4477aa'/><rect x='911' y='170' width='11' height='11' fill='#ccbb44'/><rect x='922' y='161' width='9' height='20' fill='#ee6677'/><line x1='944' y1='171' x2='1134' y2='171' stroke='#46505c' stroke-width='6' stroke-linecap='round'/></g>
+<g class='s1'><rect x='910' y='188' width='22' height='22' fill='#f4f5f6' stroke='#636c77' stroke-width='1'/><line x1='944' y1='199' x2='1094' y2='199' stroke='#dde1e5' stroke-width='6' stroke-linecap='round'/></g>
+<g class='s2'><rect x='910' y='216' width='22' height='22' fill='#f4f5f6' stroke='#636c77' stroke-width='1'/><line x1='944' y1='227' x2='1054' y2='227' stroke='#dde1e5' stroke-width='6' stroke-linecap='round'/></g>
+<circle class='dot' cx='1160' cy='36' r='8' fill='#c93b1b'/>
+</svg>

@@ -1,4 +1,5 @@
 ---
+license: cc-by-nc-4.0
 library_name: onnx
 pipeline_tag: image-feature-extraction
 tags:
@@ -11,10 +12,14 @@ tags:
   - ai-methods-1
 ---
 
+<img src="https://raw.githubusercontent.com/iaac-maai/hackathon-team6-cubicasa/main/03_app/public/logo.png" width="72" alt="The logo of the app: a small flat with a bedroom, a kitchen and a living room">
+
 # Floor-plan autoencoder for similarity search (Team 6)
 
 A convolutional autoencoder that squeezes a floor-plan image (128 x 128 px) into a code of 128 numbers, so that plans with a similar layout get codes close to each other. We use it for precedent search: an architect uploads a plan and gets the five most similar plans out of 5,000 real homes. It was made in the AI Methods I hackathon (IAAC MaAI 2026/27).
 
+- **Try it in the app, Plan precedents:** https://hackathon-team6-cubicasa-app.hackathon-team6-cubicasa-app.workers.dev (the team password comes with the course hand-in, then your own account, by email or with Google)
+- **Model server:** https://hackathon-team6-cubicasa.onrender.com
 - **GitHub repository:** https://github.com/iaac-maai/hackathon-team6-cubicasa
 - **Team:** Chloe Hraibeh, Jeff El Khoury, Luca Obejdeanu
 
@@ -173,4 +178,4 @@ The first result is the plan itself, because it's in the collection too. This sn
 - Code and notebook: https://github.com/iaac-maai/hackathon-team6-cubicasa
 - Authors: Chloe Hraibeh, Jeff El Khoury, Luca Obejdeanu, AI Methods I, IAAC MaAI 2026/27
 
-The v4 workflow writes a separate local bundle. See the [aligned model workflow](../README.md#aligned-layout-model-v4) for its inputs, model selection and verification.
+Chloe's version 4, trained on drawings aligned with their annotations, is not on the Hub: it writes a separate local bundle. See the [aligned model workflow](https://github.com/iaac-maai/hackathon-team6-cubicasa/blob/main/01_autoencoder/README.md#aligned-layout-model-v4) for its inputs, model selection and verification.

@@ -66,7 +66,7 @@ xy = np.column_stack([MAP_X + atlas[:, 0] * MAP, MAP_Y + (1 - atlas[:, 1]) * MAP
 
 css = [
     ".fade{animation:fade %ds cubic-bezier(.16,1,.3,1) infinite}" % DUR,
-    "@keyframes fade{0%%{opacity:0}4%%,93%%{opacity:1}100%%{opacity:0}}",
+    "@keyframes fade{0%{opacity:0}4%,93%{opacity:1}100%{opacity:0}}",
     ".plan{animation:plan %ds cubic-bezier(.16,1,.3,1) infinite}" % DUR,
     "@keyframes plan{0%,3%{opacity:0;transform:translateX(-40px)}10%,93%{opacity:1;transform:none}100%{opacity:0;transform:none}}",
 ]
